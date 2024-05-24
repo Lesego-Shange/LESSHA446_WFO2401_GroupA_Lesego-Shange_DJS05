@@ -1,29 +1,28 @@
 document.addEventListener("DOMContentLoaded", (event) => {
-  let count = 0;
-
   const tallyDisplay = document.getElementById("tally-display");
   const incrementBtn = document.getElementById("increment-btn");
   const decrementBtn = document.getElementById("decrement-btn");
   const resetBtn = document.getElementById("reset-btn");
 
   function updateDisplay() {
-    tallyDisplay.textContent = count;
+    const state = store.getState();
+    tallyDisplay.textContent = state.count;
   }
 
   incrementBtn.addEventListener("click", () => {
-    count++;
-    updateDisplay();
+    store.dispatch({ type: "ADD" });
   });
 
   decrementBtn.addEventListener("click", () => {
-    count--;
-    updateDisplay();
+    store.dispatch({ type: "SUBTRACT" });
   });
 
   resetBtn.addEventListener("click", () => {
-    count = 0;
-    updateDisplay();
+    store.dispatch({ type: "RESET" });
   });
+
+  // Subscribe to state changes
+  store.subscribe(updateDisplay);
 
   // Initialize the display
   updateDisplay();
